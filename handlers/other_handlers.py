@@ -14,3 +14,6 @@ from lexicon import LEXICON_RU
 
 
 router: Router = Router()
+
+
+
