@@ -5,3 +5,4 @@
 """
 from . import trottling
 from .db_middleware import DataBaseMiddleware
+from .scheduler_middleware import SchedulerMiddleware

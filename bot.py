@@ -12,7 +12,7 @@ from keyboards import set_main_menu
 from config_data import Config, load_config
 from handlers import other_handlers, user_handlers
 from handlers.buy_premium import order, send_pre_checkout_query, successful_payment
-from middlewares import DataBaseMiddleware
+from middlewares import DataBaseMiddleware, SchedulerMiddleware
 
 
 logger = logging.getLogger(__name__)
@@ -50,6 +50,7 @@ async def main():
 
     # Регистрируем мидлвари
     dp.update.middleware.register(DataBaseMiddleware(pool_connect))
+    dp.update.middleware.register(SchedulerMiddleware(scheduler))
 
     # Регистрируем хэндлеры для оплаты премиума
     dp.message.register(order, Command(commands=['premium']))
