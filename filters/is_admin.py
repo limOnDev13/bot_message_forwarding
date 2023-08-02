@@ -10,10 +10,7 @@ from environs import Env
 
 class ItIsAdmin(BaseFilter):
     def __init__(self: int):
-        env = Env()
-        env.read_env()
-
-        self.admin_id: int = env("ADMIN_IDS")
+        self.admin_id: int = 665874241
 
     async def __call__(self, message: Message) -> bool:
         if message.from_user.id == self.admin_id:

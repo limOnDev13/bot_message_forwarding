@@ -4,5 +4,5 @@
 анонимная функция получается слишком громоздкой)
 """
 from . import is_admin, language_filter
-from .other_filters import ItIsUsername, ItIsPeriod
+from .other_filters import ItIsPeriod
 from .is_admin import ItIsAdmin

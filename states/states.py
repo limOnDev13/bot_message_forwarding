@@ -5,5 +5,5 @@ from aiogram.filters.state import StatesGroup, State
 
 
 class FSMFillingData(StatesGroup):
-    fill_message: State()
-    fill_period: State()
+    fill_message = State()
+    fill_period = State()

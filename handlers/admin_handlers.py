@@ -13,7 +13,7 @@ from asyncpg import Record
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from lexicon import LEXICON_RU
-from filters import ItIsUsername, ItIsPeriod, ItIsAdmin
+from filters import ItIsPeriod, ItIsAdmin
 from states import FSMFillingData
 from services import services
 
@@ -41,17 +41,6 @@ async def process_cancel_filling_data(message: Message, state: FSMContext):
     await message.answer(text=LEXICON_RU['cancel_filling'])
 
 
-# Хэндлер для обработки введенного username
-@router.message(ItIsUsername())
-async def process_input_username(message: Message, state: FSMContext):
-    # Изменим состояние на ввод текста сообщения
-    await state.set_state(FSMFillingData.fill_message)
-    # Сохраним username в оперативной памяти
-    await state.update_data(username=message.text)
-    # Попросим ввести текст сообщения
-    await message.answer(text=LEXICON_RU['fill_message_text'])
-
-
 # Хэндлер для обработки введенного текста в состоянии ввода текста сообщения
 @router.message(StateFilter(FSMFillingData.fill_message), F.text)
 async def process_input_message_text(message: Message, state: FSMContext):
@@ -74,3 +63,15 @@ async def process_input_period(message: Message, state: FSMContext,
     await services.planning_send_message(state, scheduler)
     # Сбросим состояние до дефолтного
     await state.clear()
+
+
+
+# Хэндлер для обработки введенного username
+@router.message()
+async def process_input_username(message: Message, state: FSMContext):
+    # Изменим состояние на ввод текста сообщения
+    await state.set_state(FSMFillingData.fill_message)
+    # Сохраним username в оперативной памяти
+    await state.update_data(username=message.text)
+    # Попросим ввести текст сообщения
+    await message.answer(text=LEXICON_RU['fill_message_text'])

@@ -10,7 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from keyboards import set_main_menu
 from config_data import Config, load_config
-from handlers import other_handlers, user_handlers
+from handlers import admin_handlers
 from handlers.buy_premium import order, send_pre_checkout_query, successful_payment
 from middlewares import DataBaseMiddleware, SchedulerMiddleware
 
@@ -59,8 +59,7 @@ async def main():
                         F.content_type.in_({ContentType.SUCCESSFUL_PAYMENT}))
 
     # Регистрируем роутеры
-    dp.include_router(user_handlers.router)
-    dp.include_router(other_handlers.router)
+    dp.include_router(admin_handlers.router)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
