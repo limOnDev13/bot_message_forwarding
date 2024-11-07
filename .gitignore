@@ -1,4 +1,5 @@
 .env
+.idea
 .idea/vcs.xml
 config_data/__pycache__/
 filters/__pycache__/
@@ -9,3 +10,5 @@ services/__pycache__/
 states/__pycache__/
 database/__pycache__/
 middlewares/__pycache__/
+/.venv/
+/pgdata/
