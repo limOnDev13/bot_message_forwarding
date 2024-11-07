@@ -3,13 +3,10 @@
 если он является администратором бота.
 """
 from aiogram import Router, F
-from aiogram.filters import Command, CommandStart, Text, StateFilter, or_f
-from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
+from aiogram.filters import Command, StateFilter
+from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
-from aiogram.types.message import ContentType
-from typing import Any, List
-from asyncpg import Record
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from lexicon import LEXICON_RU
@@ -63,7 +60,6 @@ async def process_input_period(message: Message, state: FSMContext,
     await services.planning_send_message(state, scheduler)
     # Сбросим состояние до дефолтного
     await state.clear()
-
 
 
 # Хэндлер для обработки введенного username
