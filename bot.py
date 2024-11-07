@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, F
+from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types.message import ContentType
 from aiogram.filters import Command
@@ -28,8 +29,11 @@ async def main():
     logger.info('Starting bot')
 
     config: Config = load_config(None)
-    bot: Bot = Bot(token=config.tg_bot.token,
-                   parse_mode='HTML')
+    bot: Bot = Bot(
+        token=config.tg_bot.token,
+        # parse_mode='HTML'
+        default=DefaultBotProperties(parse_mode='HTML'),
+    )
     storage: MemoryStorage = MemoryStorage()
     dp: Dispatcher = Dispatcher(storage=storage)
 
@@ -39,7 +43,6 @@ async def main():
     # Настройка пула подключений к бд
     pool_connect: Pool = await asyncpg.create_pool(host=config.con_pool.db.host,
                                                    port=config.con_pool.db.port,
-                                                   database=config.con_pool.db.db_name,
                                                    user=config.con_pool.user.user,
                                                    password=config.con_pool.user.password
                                                    )
@@ -67,4 +70,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-
