@@ -21,7 +21,6 @@ class UserDB:
 class DB:
     host: str
     port: int
-    db_name: str
 
 
 @dataclass
@@ -45,8 +44,7 @@ def load_config(path: str | None = None) -> Config:
     return Config(tg_bot=TgBot(token=env('BOT_TOKEN'),
                                admin_ids=list(map(int, env.list('ADMIN_IDS')))),
                   con_pool=ConnectionsPool(db=DB(host=env('HOST'),
-                                                 port=int(env('PORT')),
-                                                 db_name=env('DATABASE')),
+                                                 port=int(env('PORT'))),
                                            user=UserDB(user=env('USER'),
                                                        password=env('PASSWORD')),
                                            min_size=int(env('POOL_MIN_SIZE')),
